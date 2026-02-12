@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Nutrition Report</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:
+        linear-gradient(rgba(0,0,0,0.60), rgba(0,0,0,0.60)),
+        url("https://images.unsplash.com/photo-1540189549336-e6e99c3679fe") center/cover fixed;
+    padding:40px 0;
+}
+
+.container{
+    width:95%;
+    max-width:1100px;
+    margin:auto;
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:22px;
+}
+
+.title{
+    grid-column:span 2;
+    text-align:center;
+    font-size:36px;
+    font-weight:800;
+    color:white;
+    margin-bottom:10px;
+    text-shadow:0 5px 12px rgba(0,0,0,0.8);
+}
+
+.card{
+    background:rgba(255,255,255,0.18);
+    padding:22px;
+    border-radius:18px;
+    color:white;
+    backdrop-filter:blur(10px);
+    border:1px solid rgba(255,255,255,0.25);
+    box-shadow:0 8px 32px rgba(0,0,0,0.35);
+    animation:fadeIn 0.9s ease;
+}
+
+@keyframes fadeIn{
+    from{opacity:0; transform:translateY(30px);}
+    to{opacity:1; transform:translateY(0);}
+}
+
+.image-card img{
+    width:100%;
+    border-radius:14px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.5);
+}
+
+.value{ font-size:16px; margin-top:6px; }
+
+.summary-box{ font-size:15px; line-height:1.6; }
+
+.stars{ font-size:22px; color:#ffeb3b; }
+
+/* RINGS */
+.rings-card{
+    grid-column:span 2;
+    text-align:center;
+}
+
+.rings-container{
+    display:flex;
+    justify-content:center;
+    gap:40px;
+    margin-top:15px;
+    flex-wrap:wrap;
+}
+
+.ring{
+    width:150px;
+    height:150px;
+    position:relative;
+}
+
+.ring svg{
+    width:150px;
+    height:150px;
+    transform:rotate(-90deg);
+}
+
+svg circle{
+    fill:none;
+    stroke-width:12;
+    stroke-linecap:round;
+}
+
+.bg{ stroke:rgba(255,255,255,0.25); }
+
+.progress{
+    stroke-dasharray:365;
+    stroke-dashoffset:365;
+    transition:stroke-dashoffset 2s ease;
+}
+
+.protein-ring{ stroke:#00ff90; filter:drop-shadow(0 0 10px #00ff90); }
+.carbs-ring{ stroke:#4da6ff; filter:drop-shadow(0 0 10px #4da6ff); }
+.fats-ring{ stroke:#ffcc00; filter:drop-shadow(0 0 10px #ffcc00); }
+
+.label{
+    position:absolute;
+    top:50%; left:50%;
+    transform:translate(-50%,-50%);
+    color:white; font-weight:700;
+    text-shadow:0 2px 6px rgba(0,0,0,0.7);
+    text-align:center;
+}
+.label span{ font-size:20px; font-weight:800; }
+
+/* SHARE BOX */
+.share-card{
+    grid-column:span 2;
+    text-align:center;
+}
+
+.share-input{
+    width:60%;
+    padding:10px;
+    border-radius:12px;
+    margin-bottom:8px;
+    border:none;
+    outline:none;
+    text-align:center;
+    font-size:16px;
+}
+
+.wa-btn{
+    padding:12px 22px;
+    background:#25D366;
+    border:none;
+    border-radius:12px;
+    font-size:18px;
+    font-weight:700;
+    color:white;
+    cursor:pointer;
+    box-shadow:0 0 18px #25D366;
+}
+
+.wa-btn img{
+    width:22px;
+    vertical-align:middle;
+}
+
+/* DOWNLOAD BUTTON */
+.download{
+    grid-column:span 2;
+    text-align:center;
+    margin-top:5px;
+}
+
+button{
+    padding:12px 22px;
+    background:#00ff90;
+    border:none;
+    border-radius:12px;
+    font-size:18px;
+    font-weight:700;
+    color:#003300;
+    cursor:pointer;
+    box-shadow:0 0 18px #00ff90;
+}
+button:hover{ background:#00e676; }
+
+.qr-img{
+    width:150px;
+    margin-top:10px;
+    border-radius:12px;
+    background:white;
+    padding:8px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="title">🍔 Nutrition Report – {{food}}</div>
+
+    <!-- IMAGE -->
+    <div class="card image-card">
+        <img src="/{{image_path}}">
+    </div>
+
+    <!-- RECOGNITION -->
+    <div class="card">
+        <h3>🔍 Recognition</h3>
+        <p class="value"><b>AI Detected:</b> {{recognized}}</p>
+    </div>
+
+    <!-- NUTRITION -->
+    <div class="card">
+        <h3>🍽 Nutrition Values</h3>
+        <p><b>Calories:</b> {{calories}} kcal</p>
+        <p><b>Protein:</b> {{protein}}%</p>
+        <p><b>Carbs:</b> {{carbs}}%</p>
+        <p><b>Fats:</b> {{fats}}%</p>
+    </div>
+
+    <!-- RATING -->
+    <div class="card">
+        <h3>⭐ Health Rating</h3>
+        <p class="stars">⭐⭐⭐⭐⭐</p>
+    </div>
+
+    <!-- SUMMARY -->
+    <div class="card">
+        <h3>📝 Summary</h3>
+        <p class="summary-box">{{summary}}</p>
+    </div>
+
+    <!-- RINGS -->
+    <div class="card rings-card">
+        <h3>🍩 Macronutrient Rings</h3>
+
+        <div class="rings-container">
+
+            <div class="ring">
+                <svg>
+                    <circle class="bg" cx="75" cy="75" r="58"></circle>
+                    <circle class="progress protein-ring" cx="75" cy="75" r="58"></circle>
+                </svg>
+                <div class="label">Protein<br><span>{{protein}}%</span></div>
+            </div>
+
+            <div class="ring">
+                <svg>
+                    <circle class="bg" cx="75" cy="75" r="58"></circle>
+                    <circle class="progress carbs-ring" cx="75" cy="75" r="58"></circle>
+                </svg>
+                <div class="label">Carbs<br><span>{{carbs}}%</span></div>
+            </div>
+
+            <div class="ring">
+                <svg>
+                    <circle class="bg" cx="75" cy="75" r="58"></circle>
+                    <circle class="progress fats-ring" cx="75" cy="75" r="58"></circle>
+                </svg>
+                <div class="label">Fats<br><span>{{fats}}%</span></div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- QR CODE + WHATSAPP SHARE -->
+    <div class="card share-card">
+        <h3>📱 Share & Access Anywhere</h3>
+
+        <p style="margin-bottom:8px;">Scan QR to access the report:</p>
+        <img src="/{{qr_path}}" class="qr-img">
+
+        <br><br>
+
+        <input type="text" id="wpnum" class="share-input"
+               placeholder="Enter WhatsApp Number (e.g., 91XXXXXXXXXX)">
+
+        <br>
+
+        <button class="wa-btn" onclick="shareWhatsApp()">
+            <img src="https://img.icons8.com/?size=512&id=16713&format=png">
+            Share Report
+        </button>
+    </div>
+
+    <!-- DOWNLOAD PDF -->
+    <div class="download">
+        <a href="/download_pdf"><button>📄 Download PDF Report</button></a>
+    </div>
+
+</div>
+
+<!-- JS FOR RING ANIMATION + WHATSAPP SHARE -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const protein = parseFloat("{{protein}}");
+    const carbs   = parseFloat("{{carbs}}");
+    const fats    = parseFloat("{{fats}}");
+
+    const len = 365;
+
+    document.querySelector(".protein-ring").style.strokeDashoffset = len - (len*protein/100);
+    document.querySelector(".carbs-ring").style.strokeDashoffset   = len - (len*carbs/100);
+    document.querySelector(".fats-ring").style.strokeDashoffset    = len - (len*fats/100);
+});
+
+function shareWhatsApp() {
+    let num = document.getElementById("wpnum").value;
+    if(num === ""){
+        alert("Please enter WhatsApp number!");
+        return;
+    }
+
+    let link = "http://localhost:5000/download_pdf";
+
+    let msg =
+        "Your Nutrition Report:%0A" +
+        "Food: {{food}}%0A" +
+        "Detected: {{recognized}}%0A" +
+        "Calories: {{calories}} kcal%0A" +
+        "Protein: {{protein}}%%0A" +
+        "Carbs: {{carbs}}%%0A" +
+        "Fats: {{fats}}%%0A%0A" +
+        "PDF Download: " + link;
+
+    window.open("https://wa.me/" + num + "?text=" + msg, "_blank");
+}
+</script>
+
+</body>
+</html>

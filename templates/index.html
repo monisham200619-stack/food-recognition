@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Nutrition Analyzer</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+<style>
+/* Full premium animated background */
+body{
+    margin:0;
+    padding:0;
+    height:100vh;
+    font-family:'Poppins',sans-serif;
+
+    background:
+        linear-gradient(135deg, rgba(0,0,0,0.55), rgba(0,0,0,0.65)),
+        url("https://images.unsplash.com/photo-1504674900247-0877df9cc836") center/cover no-repeat;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+/* Glassmorphism card */
+.card{
+    background:rgba(255,255,255,0.18);
+    width:450px;
+    padding:45px;
+    border-radius:28px;
+    backdrop-filter:blur(12px);
+    border:1px solid rgba(255,255,255,0.25);
+    color:white;
+    box-shadow:0 10px 40px rgba(0,0,0,0.5);
+    animation:fadeIn 1.3s ease;
+}
+
+/* Fade animation */
+@keyframes fadeIn{
+  from{opacity:0; transform:translateY(40px);}
+  to{opacity:1; transform:translateY(0);}
+}
+
+/* Title */
+h2{
+    text-align:center;
+    font-size:36px;
+    font-weight:800;
+    margin-bottom:25px;
+    text-shadow:0 3px 10px rgba(0,0,0,0.7);
+}
+
+/* Labels */
+label{
+    font-size:17px;
+    font-weight:600;
+    margin-top:10px;
+}
+
+/* Inputs */
+input{
+    width:100%;
+    padding:13px;
+    margin:10px 0 20px;
+    border-radius:12px;
+    border:none;
+    outline:none;
+    font-size:16px;
+    background:rgba(255,255,255,0.90);
+    color:#222;
+    font-weight:600;
+    transition:0.3s;
+}
+
+input:focus{
+    box-shadow:0 0 12px #00e5ff;
+}
+
+/* Button */
+button{
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:12px;
+    font-size:20px;
+    font-weight:700;
+    background:#00ff90;
+    color:#003300;
+    cursor:pointer;
+    transition:0.3s;
+    box-shadow:0 0 15px #00ff90;
+}
+
+button:hover{
+    background:#00e676;
+    box-shadow:0 0 23px #00ff90;
+}
+
+/* Error */
+.error{
+    text-align:center;
+    color:#ffeb3b;
+    font-weight:700;
+    font-size:17px;
+    margin-bottom:12px;
+}
+</style>
+</head>
+
+<body>
+<div class="card">
+
+<h2>🍽 Nutrition Analyzer</h2>
+
+{% if error %}
+<p class="error">{{error}}</p>
+{% endif %}
+
+<form method="POST" enctype="multipart/form-data" autocomplete="off">
+
+<label>Upload Food Image</label>
+<input type="file" name="image" required>
+
+<label>Food Name</label>
+<input type="text" name="title" placeholder="Ex: Chicken Biryani">
+
+<label>Ingredients (comma separated)</label>
+<input type="text" name="ingredients" placeholder="rice, chicken, onion">
+
+<label>Serving Size (grams)</label>
+<input type="number" name="serving" placeholder="300">
+
+<button type="submit">Predict Nutrition ➜</button>
+
+</form>
+</div>
+</body>
+</html>
