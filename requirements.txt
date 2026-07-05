@@ -1,4 +1,4 @@
-flask
+Flask
 pandas
 torch
 transformers
@@ -6,3 +6,4 @@ Pillow
 matplotlib
 qrcode
 reportlab
+gunicorn
