@@ -5,4 +5,4 @@ transformers
 Pillow
 matplotlib
 qrcode
-report lab
+reportlab
