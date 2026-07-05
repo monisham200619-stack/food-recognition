@@ -1,0 +1,8 @@
+flask
+pandas
+torch
+transformers
+Pillow
+matplotlib
+qrcode
+reportlab
